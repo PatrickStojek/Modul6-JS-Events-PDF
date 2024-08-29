@@ -42,6 +42,73 @@ const showTagName = function() {
     console.log(this.tagName)
 }
 
+const renderInfo = function(e) {
+    let text = parseInt(e.timeStamp / 1000)
+    text += ':' + this.tagName;
+    text += ' -> ' + e.type
+   console.log(text)
+}
+
 itemList.forEach((item) => {
-    item.addEventListener('click', showTagName, true)
+    item.addEventListener('mouseenter', showTagName, true)
 })
+/////////////////////
+const btnEvent1 = document.querySelector('.event1');
+const btnEvent2 = document.querySelector('.event2');
+
+
+console.log(btnEvent1)
+
+const showInformation = function(e) {
+    console.log(e.type, this.innerText);
+}
+    btnEvent1.addEventListener('click', showInformation)
+    btnEvent2.addEventListener('mouseenter', showInformation)
+    
+    btnEvent2.addEventListener('mouseenter', renderInfo)
+
+////////////////////
+const linksList = document.querySelectorAll('a')
+/* const getHref = function(e) {
+    e.preventDefault()
+
+    const href = this.getAttribute('href')
+
+    console.log(href)
+}
+
+linksList.forEach((link) => {
+    link.addEventListener('click', getHref)
+}) */
+
+
+const confirmRedirect = function(e) {
+    const newUrl = this.getAttribute('href')
+    const userDecision = confirm(
+        'Are you sure' + newUrl
+    )
+
+    if(!userDecision) {
+        e.preventDefault
+    }
+}
+
+linksList.forEach((link) => {
+    link.addEventListener('click', confirmRedirect)
+})
+/////////////////////
+const btnElement = document.querySelector('.fire_event');
+const pElement = document.querySelector('.loading');
+
+const handleRender = function(e) {
+    this.innerText = e.detail
+}
+
+const handleClick = function() {
+    const renderEvent = new CustomEvent('render', {detail: 'new content!'})
+    pElement.dispatchEvent(renderEvent);
+}
+
+
+btnElement.addEventListener('click', handleClick)
+pElement.addEventListener('render', handleRender)
